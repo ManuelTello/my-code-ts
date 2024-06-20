@@ -1,11 +1,9 @@
-import { Connection } from "mysql2";
-import { IController } from "./icontroller";
 import { Server as httpserver } from "http"
 import { Server as httpsserver } from "https"
 
 export interface IApp {
-    mountControllersRouters(controllers: Array<IController>): void;
-    mountDatabase(database_connection: Connection): void;
+    mountControllersRouters(): void;
+    mountDatabase(): void;
     startHTTPServer(): void;
     startHTTPSServer(): void;
     setUpMiddlewares(): void;

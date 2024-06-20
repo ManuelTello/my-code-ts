@@ -1,9 +1,11 @@
+import "reflect-metadata";
 import App from "./providers/app/app";
-import { createDatabaseConnection } from "./providers/database/database";
 
 const app: App = new App();
 
-app.setUpMiddlewares();
-app.mountDatabase(createDatabaseConnection());
-app.mountControllersRouters([]);
-app.startHTTPServer();
+(async function () {
+    await app.mountDatabase();
+    app.setUpMiddlewares();
+    app.mountControllersRouters();
+    app.startHTTPServer();
+}())

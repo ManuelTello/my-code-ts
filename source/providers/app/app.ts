@@ -3,16 +3,17 @@ import { IApp } from "../../interfaces/iapp";
 import { IController } from "../../interfaces/icontroller";
 import { Server as httpserver, createServer as createhttpServer } from "http";
 import { Server as httpsserver, createServer as createhttpsServer } from "https";
-import { Connection } from "mysql2";
 import { authMiddleware } from "../../middlewares/authmiddleware";
 import { pathNotFoundMiddleware } from "../../middlewares/notfoundmiddleware";
 import { serverErrorMiddleware } from "../../middlewares/servererrormiddleware";
+import { DataSource } from "typeorm";
+import { DatabaseProvider } from "../database/database";
 
 class App implements IApp {
     private mainRouter: Router;
     private mainApp: Application;
     private mainServer: httpserver | httpsserver | null;
-    private databaseConnection: Connection | null;
+    private databaseConnection: DataSource | null;
 
     public constructor() {
         this.mainApp = express();
@@ -21,7 +22,14 @@ class App implements IApp {
         this.mainServer = null;
     }
 
-    public mountControllersRouters(controllers: Array<IController>): void {
+    public mountControllersRouters(): void {
+        /*
+            Here goes all the controllers
+        */
+        const controllers: Array<IController> = new Array<IController>(
+
+        );
+
         controllers.forEach((controller) => {
             const controller_router: Router = Router();
             controller.initializeRoutes(controller_router);
@@ -31,8 +39,19 @@ class App implements IApp {
         this.mainRouter!.use(serverErrorMiddleware);
     }
 
-    public mountDatabase(database_connection: Connection): void {
-        this.databaseConnection = database_connection;
+    public async mountDatabase(): Promise<void> {
+        switch (process.env.NODE_ENV) {
+            case "development":
+                this.databaseConnection = DatabaseProvider.provideDevelopmentConnection();
+                break;
+            case "test":
+                this.databaseConnection = DatabaseProvider.provideTestConnection();
+                break;
+            default:
+                break;
+        }
+
+        await this.databaseConnection!.initialize();
     }
 
     public setUpMiddlewares(): void {
@@ -57,7 +76,7 @@ class App implements IApp {
     }
 
     public stopServer(): void {
-        this.mainServer?.close();
+        this.mainServer!.close();
     }
 }
 
