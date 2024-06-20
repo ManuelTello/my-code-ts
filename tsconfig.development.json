@@ -8,6 +8,7 @@
     "./tests/**/*"
   ],
   "compilerOptions": {
+    "sourceMap": true,
     "target": "es2022",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

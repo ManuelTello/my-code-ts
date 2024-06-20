@@ -1,8 +1,9 @@
-import { TestController } from "./controllers/testcontroller";
 import App from "./providers/app/app";
+import { createDatabaseConnection } from "./providers/database/database";
 
 const app: App = new App();
+
 app.setUpMiddlewares();
-app.mountDatabase();
-app.mountRouter([new TestController()]);
-app.startServer();
+app.mountDatabase(createDatabaseConnection());
+app.mountControllersRouters([]);
+app.startHTTPServer();
