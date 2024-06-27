@@ -3,9 +3,10 @@
     "./source/**/*"
   ],
   "exclude": [
-    "./node_modules/**/*",
-    "./build/**/*",
-    "./tests/**/*"
+    "./node_modules",
+    "./build",
+    "./tests",
+    "./www"
   ],
   "compilerOptions": {
     "sourceMap": true,
