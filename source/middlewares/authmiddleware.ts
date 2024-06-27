@@ -4,9 +4,13 @@ import "dotenv/config";
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
     const auth_header: string | undefined = req.headers.authorization;
-    if (auth_header && auth_header == `ApiKey ${process.env.API_KEY}`) {
-        next();
+    if (req.method == "POST") {
+        if (auth_header && auth_header == `ApiKey ${process.env.API_KEY}`) {
+            next();
+        } else {
+            res.status(HTTPStatusCodes.Unauthorized).send("401 unauthorized")
+        }
     } else {
-        res.status(HTTPStatusCodes.Unauthorized).send("401 unauthorized")
+        next();
     }
 }
