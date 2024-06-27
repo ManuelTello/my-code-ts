@@ -7,11 +7,14 @@
         {
             "type": "node",
             "request": "launch",
+            "env": {
+                "NODE_ENV": "development"
+            },
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "preLaunchTask": "tsc: build - tsconfig.development.json",
+            "preLaunchTask": "tsc: build - tsconfig.json",
             "program": "${workspaceFolder}/source/main.ts",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
