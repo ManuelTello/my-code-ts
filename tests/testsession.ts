@@ -1,4 +1,5 @@
-import App, { } from "../source/providers/app/app"
+import App, { } from "../source/providers/app/app";
+import { test } from "@jest/globals"; 
 
 const app = new App();
 
@@ -15,7 +16,7 @@ describe("Session testing", () => {
         await app.stopServer();
     });
 
-    it("Should create a new user", async () => {
+    test("Should create a new user", () => {
         expect(0).toEqual(0);
     })
 })
