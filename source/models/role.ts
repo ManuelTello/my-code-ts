@@ -12,6 +12,6 @@ export class Role {
     @Column({ type: "varchar", name: "role_description" })
     public role_description?: string;
 
-    @OneToMany(() => UserDetails, (details) => details.role)
+    @OneToMany(() => UserDetails, (details: UserDetails) => details.role)
     public details?: UserDetails[];
 }

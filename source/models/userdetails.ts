@@ -12,7 +12,7 @@ export class UserDetails {
     @Column({ type: "timestamp", name: "date_created" })
     public date_created?: Date;
 
-    @ManyToOne(() => Role, (roles) => roles.details)
+    @ManyToOne(() => Role, (roles: Role) => roles.details)
     @JoinColumn({ name: "role_id" })
     public role?: Role;
 }
